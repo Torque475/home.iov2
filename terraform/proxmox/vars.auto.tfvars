@@ -133,8 +133,8 @@ k8s_nodes = {
   # },
   "k8s-node-1" = {
     hostname    = "k8s-node-1"
-    vmid        = "123"
-    ip_address  = "10.1.1.23"
+    vmid        = "121"
+    ip_address  = "10.1.1.21"
     storage     = "wdBlue"
     macaddr     = "56:C4:11:75:6A:43"
     vm_template = "ubuntu-server-22.04-template"
@@ -142,8 +142,8 @@ k8s_nodes = {
   },
   "k8s-node-2" = {
     hostname    = "k8s-node-2"
-    vmid        = "124"
-    ip_address  = "10.1.1.24"
+    vmid        = "122"
+    ip_address  = "10.1.1.22"
     storage     = "wdBlue"
     macaddr     = "56:C4:11:75:6A:44"
     vm_template = "ubuntu-server-22.04-template"
@@ -151,8 +151,8 @@ k8s_nodes = {
   },
   "k8s-node-3" = {
     hostname    = "k8s-node-3"
-    vmid        = "125"
-    ip_address  = "10.1.1.25"
+    vmid        = "123"
+    ip_address  = "10.1.1.23"
     storage     = "wdBlue"
     macaddr     = "56:C4:11:75:6A:46"
     vm_template = "ubuntu-server-22.04-template"
