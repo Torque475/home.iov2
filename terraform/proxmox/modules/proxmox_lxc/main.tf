@@ -9,15 +9,15 @@ terraform {
   }
 }
 
-resource "proxmox_vm_qemu" "lxc_container" {
-  name        = var.hostname
+resource "proxmox_lxc" "lxc_container" {
+  hostname     = var.hostname
   vmid        = var.vmid             
   target_node = var.target_node          
   
   ostype     = var.os_type   
-  ostemplate = var.ostemplate
+  ostemplate = var.os_template
   cores       = var.cpu_cores                        
-  cpuunits    = var.cpu_units           
+  #cpu_    = var.cpu_units           
   memory      = var.memory             
   unprivileged = var.unprivileged
   onboot      = true
@@ -45,12 +45,11 @@ resource "proxmox_vm_qemu" "lxc_container" {
   }
 
   network {
+    name = var.net_name
     bridge  = var.net_bridge
     #mtu     = var.mtu
     #rate    = var.rate
-
-    #Could be hwaddr now?
-    macaddr = var.macaddr != "0" ? var.macaddr : null # Conditionally set MAC Address if provided
+    hwaddr = var.macaddr != "0" ? var.macaddr : null # Conditionally set MAC Address if provided
     tag    = var.vlan_tag
   }
 

@@ -285,9 +285,11 @@ module "fileserver" {
   target_node     = var.target_node
   storage         = each.value.storage
   memory          = each.value.memory
+  ssh_public_keys = var.ssh_public_keys
+  unprivileged    = each.value.unprivileged
 
   # Mountpoint is dynamic for 0-many extra mounts
   # all the work is done in the tfvars file
-  mountpoints     = each.value.mountpoints
+  mountpoints     = try(each.value.mountpoints, {})
 
 }

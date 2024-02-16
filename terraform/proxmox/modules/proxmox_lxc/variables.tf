@@ -75,8 +75,8 @@ variable "memory" {
 
 variable "rootfs_size" {
   description = "Size of the HDD of the k8s node."
-  type        = number
-  default     = 8
+  type        = string
+  default     = "8G"
 }
 
 variable "storage" {
@@ -89,7 +89,7 @@ variable "storage" {
 variable "os_template" {
   description = "Template to clone for the k8s node."
   type        = string
-  default     = "ubuntu-20.04-standard_20.04-1_amd64.tar.gz"
+  default     = "local:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz"
 }
 
 # This is set to 1 int above the flux requirements.
@@ -128,9 +128,16 @@ variable "unprivileged" {
     default = true
 }
 
+variable "net_name" {
+    description = "Name of the network - like eth0"
+    type = string
+    default = "eth0"
+  
+}
+
 variable "mountpoints" {
     description = "List of mount points for container"
-    type = List(object({
+    type = list(object({
         key = string
         slot = number
         storage = string
