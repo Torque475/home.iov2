@@ -268,3 +268,26 @@ module "k8s_node" {
   username        = var.username
   agent           = var.agent
 }
+
+#
+# Container Time!
+# FileShare Container
+module "fileserver" {
+  source          = "./modules/proxmox_lxc"
+  for_each        = var.fileserver
+  hostname        = each.value.hostname
+  vmid            = each.value.vmid
+  nameserver      = var.nameserver
+  ip_address      = "${each.value.ip_address}"
+  gateway         = var.gateway
+  macaddr         = try(each.value.macaddr, "0")
+  os_template      = each.value.os_template
+  target_node     = var.target_node
+  storage         = each.value.storage
+  memory          = each.value.memory
+
+  # Mountpoint is dynamic for 0-many extra mounts
+  # all the work is done in the tfvars file
+  mountpoints     = each.value.mountpoints
+
+}

@@ -237,3 +237,36 @@ casaOS = {
   #   vm_template = "ubuntu-server-22.04-template"
   # }
 }
+
+fileserver = {
+  "fileserver" = {
+    hostname    = "FileServer"
+    vmid        = "111"
+    ip_address  = "10.1.1.11"
+    # rootfs_size = 8G # Using default
+    storage     = "wdBlue"
+    # macaddr     = "56:C4:11:75:6A:43" #Let it set and then save it
+    os_type     = "debian"
+    os_template = "debian-12-standard_12.2-1_amd64.tar.zst"
+    cores       = 4
+    memory      = 2048
+    unprivileged= true #Default
+
+    mountpoints = [
+      {
+        key = "0"
+        slot = 0
+        storage = "wdBlue"
+        mp = "/mnt/share_1"
+        size = "100G"
+      },
+      {
+        key = "0"
+        slot = 0
+        storage = "wdBlue"
+        mp = "/mnt/share_2"
+        size = "50G"
+      }
+    ]
+  }
+}
