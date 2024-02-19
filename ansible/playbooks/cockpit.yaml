@@ -7,4 +7,5 @@
   
   roles: 
     - { role: cockpit, tags: cockpit }
+    - { role: tailscale }
     
