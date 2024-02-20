@@ -96,3 +96,12 @@
 - name: Uninstall Tailscale
   when: state == "absent"
   ansible.builtin.include_tasks: uninstall.yml
+
+- name: Ensure nameservers are set in /etc/resolv.conf
+  ansible.builtin.lineinfile:
+    path: /etc/resolv.conf
+    line: "{{ item }}"
+    state: present
+  loop:
+    - 'nameserver 1.1.1.1'
+    - 'nameserver 8.8.8.8'
