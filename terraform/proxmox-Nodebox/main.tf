@@ -15,13 +15,14 @@ module "flux_cumulus" {
   nameserver      = var.nameserver
   ip_address      = "${each.value.ip_address}"
   gateway         = var.gateway
-  searchdomain    = var.searchdomain
+#  searchdomain    = var.searchdomain
   macaddr         = try(each.value.macaddr, "0")
   vm_template     = each.value.vm_template
   target_node     = var.target_node
   storage         = each.value.storage
-  username        = var.username
+  username        = each.value.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
   cpu_cores       = var.flux_cumulus_requirements.cpu_cores
   memory          = var.flux_cumulus_requirements.memory
   hdd_size        = var.flux_cumulus_requirements.hdd_size
@@ -45,6 +46,7 @@ module "flux_cumulus_test" {
   storage         = each.value.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
   cpu_cores       = var.flux_cumulus_requirements.cpu_cores
   memory          = var.flux_cumulus_requirements.memory
   hdd_size        = var.flux_cumulus_requirements.hdd_size
@@ -68,6 +70,7 @@ module "flux_nimbus" {
   storage         = each.value.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
   cpu_cores       = var.flux_nimbus_requirements.cpu_cores
   memory          = var.flux_nimbus_requirements.memory
   hdd_size        = var.flux_nimbus_requirements.hdd_size
@@ -91,6 +94,7 @@ module "flux_stratus" {
   storage         = each.value.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
   cpu_cores       = var.flux_stratus_requirements.cpu_cores
   memory          = var.flux_stratus_requirements.memory
   hdd_size        = var.flux_stratus_requirements.hdd_size
@@ -125,6 +129,7 @@ module "pihole" {
   storage         = var.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
 }
 
 #                                               ▄▄
@@ -150,6 +155,7 @@ module "container-host" {
   storage         = var.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
 }
 
 module "vpn-host" {
@@ -166,6 +172,7 @@ module "vpn-host" {
   storage         = each.value.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
 }
 
 
@@ -183,6 +190,7 @@ module "casaOS" {
   storage         = each.value.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
 }
 
  # ▄▄▄▄▄▄            █                             ▄     ▄               █               ▄             ▄      ▀
@@ -205,6 +213,7 @@ module "fedora_workstation" {
   storage         = each.value.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
 }
 
 # ▄     ▄                      █             ▄    ▄
@@ -229,6 +238,7 @@ module "wazuh_manager" {
   storage         = each.value.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
 }
 # ░█░█░█░█░█▀▄░█▀▀░█▀▄░█▀█░█▀▀░▀█▀░█▀▀░█▀▀░░░█▄█░█▀█░█▀▀░▀█▀░█▀▀░█▀▄
 # ░█▀▄░█░█░█▀▄░█▀▀░█▀▄░█░█░█▀▀░░█░░█▀▀░▀▀█░░░█░█░█▀█░▀▀█░░█░░█▀▀░█▀▄
@@ -247,6 +257,7 @@ module "k8s_master" {
   storage         = each.value.storage
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
 }
 
 # ░█░█░█░█░█▀▄░█▀▀░█▀▄░█▀█░█▀▀░▀█▀░█▀▀░█▀▀░░░█▀█░█▀█░█▀▄░█▀▀
@@ -267,13 +278,14 @@ module "k8s_node" {
   memory          = each.value.memory
   username        = var.username
   agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
 }
 
 #
 # Container Time!
 # FileShare Container
 module "fileserver" {
-  source          = "./modules/proxmox_lxc"
+  source          = "../proxmox/modules/proxmox_lxc"
   for_each        = var.fileserver
   hostname        = each.value.hostname
   vmid            = each.value.vmid
