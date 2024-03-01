@@ -76,6 +76,12 @@ variable "casaOS" {
   default     = {}
 }
 
+variable "fileserver" {
+  description = "Set of LXC containers for fileserver"
+  type        = map(any)
+  default     = {}
+}
+
 variable "gateway" {
   description = "Gateway of the VM."
   type        = string
@@ -159,13 +165,13 @@ variable "vm_template" {
 }
 
 variable "username" {
-  description = "Username of the VM"
+  description = "Username of the node"
   type        = string
-  default     = "techdufus"
+  default     = "torque"
 }
 
 variable "searchdomain" {
-  description = "Search domain of the VM"
+  description = "Search domain of the node"  
   type        = string
   default     = "home.io"
 }
@@ -258,4 +264,3 @@ variable "flux_stratus_requirements" {
     mbps_wr_max = 410
     rate        = 14
   }
-}

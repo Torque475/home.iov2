@@ -132,7 +132,6 @@ variable "net_name" {
     description = "Name of the network - like eth0"
     type = string
     default = "eth0"
-
 }
 
 variable "start" {

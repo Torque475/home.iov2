@@ -6,7 +6,7 @@ variable "hostname" {
 variable "username" {
   description = "Username of the VM."
   type        = string
-  default     = "techdufus"
+  default     = "torque"
 }
 
 variable "nameserver" {
@@ -164,7 +164,7 @@ variable "ssd" {
 }
 
 variable "discard" {
-  description = "Discard of the VM."
+  description = "Discard setting of the VM."
   type        = bool
   default     = false
 }
@@ -203,7 +203,7 @@ variable "ssh_public_keys" {
 variable "ssh_user" {
   description = "SSH user of the VM."
   type        = string
-  default     = "techdufus"
+  default     = "torque"
 }
 
 variable "macaddr" {
@@ -214,7 +214,7 @@ variable "macaddr" {
 variable "agent" {
   description = "QEMU UserAgent for Proxmox"
   type        = number
-  default     = 1
+  default     = 0
 }
 
 variable "cloudinit_cdrom_storage" {

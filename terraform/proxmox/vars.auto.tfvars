@@ -1,13 +1,21 @@
 #global vars
-nameserver  = "10.0.20.1"
-gateway     = "10.0.20.1"
-vm_template = "ubuntu-server-20.04-template"
-target_node = "proxmox"
-ssh_public_keys = <<EOF
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFiL48RdHXOm+Mo2HboWkrrcUKX2odIg23b/3ondXV5d
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEqRpZTZomhFqOo2mG4q21JyeKPa4ZgDFQIqPFU05Bn
-EOF
-    
+
+nameserver    = "10.1.1.1"
+gateway       = "10.1.1.1"
+searchdomain  = "home.io"
+vm_template   = "ubuntu-server-22.04-template"
+target_node   = "pve"
+storage       = "wdBlue"
+username      = "torque"
+ssh_public_keys= "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYjmlSd0iE+QyWQReb0kZk2C4s/682CpuT1PNDBP9+YQ8nmTSXrPvse4uptpORNXRdQZC4JK7Xi2WQVzur5dVMxRDgr0RoBv6CuskhIIfe0iKnNk7coldcVPGY+Ff7vJX86c2rzzaq7+C3uRO+TDiWSJ/7DtdTeyV7pHOcoYs49aa/d6vS6uN6i5RW+3X+CmE4t5Mnm4ZCFv1KwsMC0PVjH4FIVmynU7qZ7a2LaTEgiNFgtOlLk2Ccnbu+n2OOHkUysvZR4SejzOAsuckFFMH06c6OIqEa5YKlTQlqqGIJGndeh4+jiS2N1TEWa3ZylJk2kbKCriSgiwOzfeC5or9AlS19w1hmX8a3RG2twdJfovfQUcnxcQ+E3kM2hbGAC2QvqONnI/6mrjT6UK7FM2afFY7wQKQmE6Wi0J6Yb71ue0hzz6ggVHtANFMkXH15bTboScjSQgrTvqRwhSKajV1/Gla51+le8KsjBmq05lG6L0cHtt9acm9qCkyIWpRBhuX1kWlf0V9vEsHcDBZ5sVlWvXMyTTWm2GHJAV5SpRJdRNwRi3ScffMUDLrx8HSAMKnaCp+ejcEsUbIWIQaOQLduGiaVQ+Npt4NkO0l1uvwjPPGKlCEcQOygjhOMVxlKECdU+MsApi/by5p8f0K+6PFkTFGNqKidDK6fmhI97FYVwQ=="
+
+# Use to create privileged containers
+# pm_user = "root@pam"
+
+
+#To create VM's, Agent must be 0. To destroy them, agent must be 1: Github Issue #922
+agent         = 0
+
 nimbus_nodes = {
   "pm-flux-nimbus-0" = {
     hostname    = "pm-flux-nimbus-0"
@@ -232,6 +240,44 @@ casaOS = {
   #   vm_template = "ubuntu-server-22.04-template"
   # }
 }
+
+fileserver = {
+  "fileserver" = {
+    hostname    = "FileServer"
+    vmid        = "111"
+    ip_address  = "10.1.1.11/24"
+    # rootfs_size = 8G # Using default
+    storage     = "wdBlue"
+    # macaddr     = "" #Let it set and then save it
+    os_type     = "debian"
+
+    # local:vztmpl prior to the template name is critical
+    os_template = "local:vztmpl/debian-12-standard_12.2-1_amd64.tar.zst"
+    #cpu       = 4
+    memory      = 2048
+    swap        = 512
+    unprivileged= false #Default #Requires root to run
+    cpu_cores    = 4
+
+    mountpoints = [
+      {
+        key = "1"
+        slot = 1
+        storage = "wdBlue"
+        mp = "/mnt/share_1"
+        size = "100G"
+      },
+      {
+        key = "2"
+        slot = 2
+        storage = "wdBlue"
+        mp = "/mnt/share_2"
+        size = "50G"
+      }      
+    ]
+  }
+}
+
 # Example Container with rootfs and 2 mounted drives defined.
 lxc_cumulus_nodes = {
   "lxc-cumulus0" = {
@@ -244,7 +290,7 @@ lxc_cumulus_nodes = {
     # macaddr     = "" #Let it set and then save it
     os_type     = "debian"
 
-    # local:vztmpl prior to the template name is critical
+    # local:vztmpl prior to the template name is critical, Default Proxmox storage location
     os_template = "local:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz"
     unprivileged = true #Default
 

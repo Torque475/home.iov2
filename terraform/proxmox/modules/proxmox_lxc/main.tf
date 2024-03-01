@@ -35,6 +35,7 @@ resource "proxmox_lxc" "lxc_container" {
     size = var.rootfs_size
   }
 
+
   #This will create a mountpoint for each mountpoint object defined.
   # 0 Mountpoints means none will be injected and it'll still be fine.
   dynamic "mountpoint" {
@@ -48,7 +49,7 @@ resource "proxmox_lxc" "lxc_container" {
         mp = mountpoint.value.mp
         size = mountpoint.value.size
     }
-
+    
   }
 
   network {
@@ -61,7 +62,6 @@ resource "proxmox_lxc" "lxc_container" {
     hwaddr = var.macaddr != "0" ? var.macaddr : null # Conditionally set MAC Address if provided
     tag    = var.vlan_tag
   }
-
 
   # Terraform will ignore these vm object values if / when they change.
   # This might cause terraform to destroy and recreate the VM entirely for some small change.
