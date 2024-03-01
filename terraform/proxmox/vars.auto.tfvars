@@ -7,7 +7,7 @@ ssh_public_keys = <<EOF
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFiL48RdHXOm+Mo2HboWkrrcUKX2odIg23b/3ondXV5d
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEqRpZTZomhFqOo2mG4q21JyeKPa4ZgDFQIqPFU05Bn
 EOF
-
+    
 nimbus_nodes = {
   "pm-flux-nimbus-0" = {
     hostname    = "pm-flux-nimbus-0"

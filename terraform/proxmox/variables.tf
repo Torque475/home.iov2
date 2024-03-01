@@ -259,5 +259,3 @@ variable "flux_stratus_requirements" {
     rate        = 14
   }
 }
-
-
