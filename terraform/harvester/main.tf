@@ -12,9 +12,9 @@ resource "harvester_virtualmachine" "rancher_server" {
   cpu = 4
   memory = "8Gi"
 
-  efi = torque
+  efi = true
   secure_boot = false
-  runstratagy = "RerunOnFailure"
+  run_strategy = "RerunOnFailure"
   restart_after_update = true
 
   network_interface {

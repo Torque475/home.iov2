@@ -1,13 +1,13 @@
 #Prexisting mgmt cluster network
 data "harvester_clusternetwork" "mgmt" {
-    name = mgmt
+    name = "mgmt"
 }
 
 # Will add additional Cluster networks once new NIC is installed 
 
 data "harvester_network" "homelab-network" {
     name = "homelab-network"
-    namespace = homelab
+    namespace = "homelab"
 }
 
 # Will add additional Networks as needed

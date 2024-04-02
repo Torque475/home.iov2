@@ -7,10 +7,10 @@ resource "harvester_image" "images" {
   
   display_name = each.value.display_name
   url = each.value.url
-  source_type = "each.value.source_type"
+  source_type = each.value.source_type
   tags = each.value.tags
 
-  depends_on = [ var.images.namespace ]
+  # depends_on = [ var.images.namespace ]
 }
 
 variable "images" {
