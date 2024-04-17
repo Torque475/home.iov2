@@ -88,6 +88,7 @@ function k3s_install {
     export KUBECONFIG=~/.kube/config:$PWD/kubeconfig
     kubectl config view --merge --flatten > ~/.kube/merged_config
     mv ~/.kube/merged_config ~/.kube/config
+    chmod 600 ~/.kube/config
     rm kubeconfig
 }
 
@@ -101,27 +102,27 @@ function rancher_install {
     kubectl create namespace cattle-system
 
     # 4 Install cert Manager
-    # If you have installed the CRDs manually instead of with the `--set installCRDs=true` option added to your Helm install command, you should upgrade your CRD resources before upgrading the Helm chart:
-    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/$cert_manager_version/cert-manager.crds.yaml
-
     # Add the Jetstack Helm repository
     helm repo add jetstack https://charts.jetstack.io
 
     # Update your local Helm chart repository cache
     helm repo update
 
+    # Assumes cert-manager is not yet installed. Will fail if it is 
     # Install the cert-manager Helm chart
+    echo "Installing cert-manager"
     helm install cert-manager jetstack/cert-manager \
         --namespace cert-manager \
         --create-namespace \
-        --version $cert_manager_version
+        --version $cert_manager_version \
         --set installCRDs=true
 
 
     # 5 Install Rancher with helm
+    echo "Installing rancher"
     helm install rancher rancher-stable/rancher \
         --namespace cattle-system \
-        --replicas -1 \
+        # --set replicas -1 \
         --set hostname=$rancher_fqdn \
         --set bootstrapPassword=$rancher_password
     
