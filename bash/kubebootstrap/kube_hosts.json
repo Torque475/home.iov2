@@ -1,0 +1,14 @@
+[
+    {
+      "hostname": "k3s-master",
+      "ip": "10.1.5.20"
+    },
+    {
+      "hostname": "k3s-node-1",
+      "ip": "10.1.5.21"
+    },
+    {
+      "hostname": "k3s-node-2",
+      "ip": "10.1.5.22"
+    }    
+  ]
