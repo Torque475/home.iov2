@@ -154,7 +154,7 @@
 # cloud-init clones have the updated keys
 - name: Downloading GitHub SSH key(s)
   get_url:
-    url: https://github.com/techdufus.keys
+    url: https://github.com/torque475.keys
     dest: /root/github_keys.pub
     force: yes
 - name: Setting Template SSH Public Keys for root

@@ -12,27 +12,47 @@ cockpit_groups:
   - group: qbit
   - group: plex
   - group: k8s
-  - group: samba
-  - group: nfs
+  - group: 7zip
+  - group: nas-download-requests
+  - group: nas-plex-media
+  - group: nas-emulation-roms
+  - group: nas-emulation
+  - group: nas-emulation-roms-readonly
+  - group: nas-emulation-readonly
+  - group: nas-games
+  - group: nas-games-readonly
+  - group: nas-backups
+  - group: nas-fullaccess
+  - group: nas-shared-space
+  - group: nas-shared-space-readonly
+  - group: nas-internal
+  - group: nas-internal-readonly
+  - group: nas-temp-shares
 
 
 #Even with these users, still have to set the samba passwords
 cockpit_users:
   - user: qbit
     password: 'k8s.pass'
-    groups: ['qbit', 'samba', 'nfs']
+    groups: ['qbit', 'nas-plex-media', 'nas-emulation','nas-emulation-roms']
   - user: plex
     password: "k8s.pass"
-    groups: ['plex', 'samba', 'nfs']
+    groups: ['plex','nas-plex-media']
   - user: k8s
     password: "k8s.pass"
-    groups: ['k8s', 'samba', 'nfs']
+    groups: ['k8s']
+  - user: unrarer
+    password: "k8s.pass"
+    groups: ['7zip']
   - user: torque
     password: torque.pass
-    groups: ['sudo', 'samba', 'nfs']
+    groups: ['sudo', 'nas-fullaccess']
   - user: fileshare-test
     password: default.pass
-    groups: ['samba', 'nfs']
+    groups: ['nas-emulation-roms-readonly','nas-emulation-readonly','nas-shared-space','nas-games-readonly','nas-temp-shares']
   - user: asseenontv
     password: default.pass
-    groups: ['samba', 'nfs']
+    groups: ['nas-emulation-roms-readonly','nas-emulation-readonly','nas-shared-space','nas-games-readonly','nas-temp-shares', 'nas-download-requests']
+  - user: eagle07
+    password: default.pass
+    groups: ['nas-emulation-roms','nas-emulation','nas-shared-space','nas-games','nas-temp-shares', 'nas-download-requests']
