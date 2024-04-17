@@ -62,8 +62,8 @@ resource "harvester_cloudinit_secret" "rancher-server-cloud-config" {
 
   user_data = <<-EOF
     #Cloud Config
-    #password: 123456
-    ssh_pwauth: false
+    #password: "$6$rounds=4096$w10iPTKZhGXGeKXt$3BvdXDU/VkqYUxGcDrJrvqKbvXS5R9sAaqtdGNBk5J4FQMLG6zg/DO.bjhlUV1bqzvUjpP.Ai4V5p/XgnszHZ/"
+    ssh_pwauth: true
     package_update: true
     packages:
       - qemu-guest-agent
