@@ -254,7 +254,28 @@ module "k8s_master" {
   macaddr         = try(each.value.macaddr, "0")
   vm_template     = each.value.vm_template
   target_node     = var.target_node
+  cpu_cores       = var.cpu_cores
   storage         = each.value.storage
+  username        = var.username
+  agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
+}
+
+# Rancher server to help manage k3s nodes
+module "rancher" {
+  source          = "./modules/proxmox_vm"
+  for_each        = var.rancher
+  hostname        = each.value.hostname
+  vmid            = each.value.vmid
+  nameserver      = var.nameserver
+  ip_address      = "${each.value.ip_address}"
+  gateway         = var.gateway
+  macaddr         = try(each.value.macaddr, "0")
+  vm_template     = each.value.vm_template
+  target_node     = var.target_node
+  cpu_cores       = each.value.cpu_cores
+  storage         = each.value.storage
+  memory          = each.value.memory
   username        = var.username
   agent           = var.agent
   ssh_public_keys = var.ssh_public_keys

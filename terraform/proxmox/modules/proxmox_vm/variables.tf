@@ -88,7 +88,7 @@ variable "cpu_cores" {
 variable "cpu_sockets" {
   description = "Number of CPU sockets of the k8s node."
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "memory" {

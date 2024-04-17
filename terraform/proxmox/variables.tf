@@ -22,6 +22,12 @@ variable "stratus_nodes" {
   default     = {}
 }
 
+variable "rancher" {
+  description = "Map of rancher server nodes"
+  type        = map(any)
+  default     = {}
+}
+
 variable "k8s_master" {
   description = "Map of k8s master nodes"
   type        = map(any)

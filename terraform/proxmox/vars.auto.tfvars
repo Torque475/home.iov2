@@ -1,17 +1,17 @@
 #global vars
-nameserver    = "10.1.1.1"
-gateway       = "10.1.1.1"
-searchdomain  = "home.io"
+nameserver    = "10.1.5.1"
+gateway       = "10.1.5.1"
+searchdomain  = "homelab"
 vm_template   = "ubuntu-server-22.04-template"
-target_node   = "pve"
+target_node   = "epycness"
 storage       = "wdBlue"
 username      = "torque"
 ssh_public_keys= "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYjmlSd0iE+QyWQReb0kZk2C4s/682CpuT1PNDBP9+YQ8nmTSXrPvse4uptpORNXRdQZC4JK7Xi2WQVzur5dVMxRDgr0RoBv6CuskhIIfe0iKnNk7coldcVPGY+Ff7vJX86c2rzzaq7+C3uRO+TDiWSJ/7DtdTeyV7pHOcoYs49aa/d6vS6uN6i5RW+3X+CmE4t5Mnm4ZCFv1KwsMC0PVjH4FIVmynU7qZ7a2LaTEgiNFgtOlLk2Ccnbu+n2OOHkUysvZR4SejzOAsuckFFMH06c6OIqEa5YKlTQlqqGIJGndeh4+jiS2N1TEWa3ZylJk2kbKCriSgiwOzfeC5or9AlS19w1hmX8a3RG2twdJfovfQUcnxcQ+E3kM2hbGAC2QvqONnI/6mrjT6UK7FM2afFY7wQKQmE6Wi0J6Yb71ue0hzz6ggVHtANFMkXH15bTboScjSQgrTvqRwhSKajV1/Gla51+le8KsjBmq05lG6L0cHtt9acm9qCkyIWpRBhuX1kWlf0V9vEsHcDBZ5sVlWvXMyTTWm2GHJAV5SpRJdRNwRi3ScffMUDLrx8HSAMKnaCp+ejcEsUbIWIQaOQLduGiaVQ+Npt4NkO0l1uvwjPPGKlCEcQOygjhOMVxlKECdU+MsApi/by5p8f0K+6PFkTFGNqKidDK6fmhI97FYVwQ=="
 # Use to create privileged containers
-# pm_user = "root@pam"
+#pm_user = "root@pam"
 
 
-#To create VM's, Agent must be 0. To destroy them, agent must be 1: Github Issue #922
+#To create VM's, Agent must be 0. It inherits from the template it is made from: Github Issue #922
 agent         = 0
 
 nimbus_nodes = {
@@ -91,15 +91,30 @@ cumulus_nodes = {
   # },
 }
 
+rancher = {
+  "rancher" = {
+    hostname    = "rancher"
+    vmid        = "119"
+    ip_address  = "10.1.5.19"
+    storage     = "wdBlue"
+    macaddr     = "56:C4:11:75:6A:39"
+    vm_template = "ubuntu-server-22.04-template"
+    cpu_cores   = 2
+    memory      = 4096
+  }
+}
+
 k8s_master = {
   "k8s-master-0" = {
     hostname    = "k8s-master-0"
     vmid        = "120"
-    ip_address  = "10.1.1.20"
+    ip_address  = "10.1.5.20"
     storage     = "wdBlue"
     macaddr     = "56:C4:11:75:6A:40"
     vm_template = "ubuntu-server-22.04-template"
-  },
+    cpu_cores   = 2
+    memory      = 4096
+  }#,
   # "k8s-master-1" = {
   #   hostname    = "k8s-master-1"
   #   vmid        = "141"
@@ -138,41 +153,34 @@ k8s_nodes = {
   "k8s-node-1" = {
     hostname    = "k8s-node-1"
     vmid        = "121"
-    ip_address  = "10.1.1.21"
+    ip_address  = "10.1.5.21"
     storage     = "wdBlue"
     macaddr     = "56:C4:11:75:6A:43"
     vm_template = "ubuntu-server-22.04-template"
+    cpu_cores   = 4
     memory      = 8192
   },
   "k8s-node-2" = {
     hostname    = "k8s-node-2"
     vmid        = "122"
-    ip_address  = "10.1.1.22"
+    ip_address  = "10.1.5.22"
     storage     = "wdBlue"
     macaddr     = "56:C4:11:75:6A:44"
     vm_template = "ubuntu-server-22.04-template"
+    cpu_cores   = 4
     memory      = 8192
   },
-  "k8s-node-3" = {
-    hostname    = "k8s-node-3"
-    vmid        = "123"
-    ip_address  = "10.1.1.23"
-    storage     = "wdBlue"
-    macaddr     = "56:C4:11:75:6A:46"
-    vm_template = "ubuntu-server-22.04-template"
-    memory      = 8192
-  },
-} 
- 
-fedora_workstation = {
-  # "fedora_workstation" = {
-  #     hostname   = "fedora workstation"
-  #     vmid       = "420"
-  #     ip_address = "1923.168.1.42"
-  #     storage    = "vm-ssd-1"
-  #     macaddr    = "56:c4:11:75:6a:42"
+  # "k8s-node-3" = {
+  #   hostname    = "k8s-node-3"
+  #   vmid        = "123"
+  #   ip_address  = "10.1.5.23"
+  #   storage     = "wdBlue"
+  #   macaddr     = "56:C4:11:75:6A:45"
+  #   vm_template = "ubuntu-server-22.04-template"
+  #   cpu_cores   = 4
+  #   memory      = 8192
   # },
-}
+} 
 
 wazuh_manager = {
   # "wazuh_manager" = {
@@ -202,11 +210,10 @@ pihole = {
 }
 
 container-host = {
-  # "container-host" = {
+  # "portainer" = {
   #   hostname     = "container-host"
-  #   vmid         = "149"
-  #   ip_address   = "10.0.20.49"
-  #   storage      = "VM-SSD-4"
+  #   vmid         = "115"
+  #   ip_address   = "10.1.5.15"
   #   macaddr      = "06:74:60:C0:37:49"
   #   vm_template = "ubuntu-server-22.04-template"
   # },
@@ -242,37 +249,44 @@ casaOS = {
   # }
 }
 
+# No longer using a lxc container for a nas
 fileserver = {
-  "fileserver" = {
-    hostname    = "FileServer"
-    vmid        = "111"
-    ip_address  = "10.1.1.11/24"
-    # rootfs_size = 8G # Using default
-    storage     = "wdBlue"
-    # macaddr     = "56:C4:11:75:6A:43" #Let it set and then save it
-    os_type     = "debian"
-    os_template = "local:vztmpl/debian-12-standard_12.2-1_amd64.tar.zst"
-    #cpu       = 4
-    memory      = 2048
-    swap        = 512
-    unprivileged= false #Default #Requires root to run
-    cpu_cores    = 4
-
-    mountpoints = [
-      {
-        key = "1"
-        slot = 1
-        storage = "wdBlue"
-        mp = "/mnt/share_1"
-        size = "100G"
-      },
-      {
-        key = "2"
-        slot = 2
-        storage = "wdBlue"
-        mp = "/mnt/share_2"
-        size = "50G"
-      }      
-    ]
-  }
+  # "fileserver" = {
+  #   hostname    = "FileServer"
+  #   vmid        = "111"
+  #   ip_address  = "10.1.5.11/24"
+  #   # rootfs_size = 8G # Using default
+  #   storage     = "wdBlue"
+  #   # macaddr     = "56:C4:11:75:6A:43" #Let it set and then save it
+  #   os_type     = "debian"
+  #   os_template = "local:vztmpl/debian-12-standard_12.2-1_amd64.tar.zst"
+  #   memory      = 8192
+  #   swap        = 512
+  #   unprivileged= false #Default #Requires root to run
+  #   cpu_cores    = 4
+# 
+  #   mountpoints = [
+  #     {
+  #        key = "1"
+  #       slot = 1
+  #       storage = "nvmes"
+  #       mp = "/nas/nvme/"
+  #       size = "15T"
+  #     },
+  #     {
+  #       key = "2"
+  #       slot = 2
+  #       storage = "hc530-array"
+  #       mp = "/nas/backups/"
+  #       size = "40T"
+  #     },
+  #     {
+  #       key = "3"
+  #       slot = 3
+  #       storage = "hdd_array"
+  #       mp = "/nas/hdds/"
+  #       size = "70T"
+  #     }
+  #   ]
+  # }
 }
