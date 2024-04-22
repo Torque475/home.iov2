@@ -33,6 +33,8 @@ config_path="~/.kube/config"
 ssh_key_path="~/.ssh/torque"
 user="torque"
 
+k3s_version="v1.28.8+k3s1"
+
 # Rancher Server variables
 cert_manager_version=v1.14.4
 rancher_fqdn="rancher.homelab.lan"
@@ -77,6 +79,9 @@ function k3s_install {
         --user $user \
         > $hosts"_bootstrap.sh"
     
+    # Add k3s-version flag to plan (since it's not an option)
+    sed -i "s/--user $user/& --k3s-version $k3s_version/g" $hosts"_bootstrap.sh"
+
     #Run it to actually create the cluster
     chmod +x $hosts"_bootstrap.sh"
     ./$hosts"_bootstrap.sh"
@@ -122,9 +127,9 @@ function rancher_install {
     echo "Installing rancher"
     helm install rancher rancher-stable/rancher \
         --namespace cattle-system \
-        # --set replicas -1 \
         --set hostname=$rancher_fqdn \
-        --set bootstrapPassword=$rancher_password
+        --set bootstrapPassword=$rancher_password \
+        --set replicas=1
     
 
     # 6 Wait for it to be deployed
