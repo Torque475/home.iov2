@@ -12,6 +12,7 @@ ssh_public_keys= "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYjmlSd0iE+QyWQReb0kZk2C
 
 
 #To create VM's, Agent must be 0. It inherits from the template it is made from: Github Issue #922
+
 agent         = 0
 
 nimbus_nodes = {
@@ -41,11 +42,11 @@ nimbus_nodes = {
   #},
 }
 cumulus_nodes = {
-  # "Josh-1" = {
+  # "pm-flux-cumulus-0" = {
   #   hostname   = "pm-flux-cumulus-0"
   #   vmid       = "110"
-  #   ip_address = "10.1.1.30"
-  #   storage    = "wdBlue"
+  #   ip_address = "10.0.20.10"
+  #   storage    = "VM-SSD-3"
   #   macaddr    = "56:C4:11:75:6A:11"
   #   vm_template = "ubuntu-server-22.04-template"
   # },
@@ -87,7 +88,7 @@ cumulus_nodes = {
   #   ip_address = "192.168.1.14"
   #   storage    = "VM-SSD-2"
   #   macaddr    = "56:C4:11:75:6A:15"
-    # vm_template = "ubuntu-server-20.04-template"
+  # vm_template = "ubuntu-server-20.04-template"
   # },
 }
 
@@ -249,6 +250,7 @@ casaOS = {
   # }
 }
 
+
 # No longer using a lxc container for a nas
 fileserver = {
   # "fileserver" = {
@@ -288,5 +290,32 @@ fileserver = {
   #       size = "70T"
   #     }
   #   ]
-  # }
+   }
+}
+# Example Container with rootfs and 2 mounted drives defined.
+lxc_cumulus_nodes = {
+#  "lxc-cumulus0" = {
+#    hostname    = "lxc-cumulus0"
+#    vmid        = "110"
+#    ip_address  = "10.0.20.10/24"
+#    # rootfs_size = 8G # Using default
+#    storage = "VM-SSD-0"
+#    cpu_cores = 4
+#    # macaddr     = "" #Let it set and then save it
+#    os_type     = "debian"
+#
+#    # local:vztmpl prior to the template name is critical, Default Proxmox storage location
+#    os_template = "local:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz"
+#    unprivileged = true #Default
+
+#    mountpoints = [
+#      {
+#        key = "1"
+#        slot = 1
+#        storage = "VM-SSD-0"
+#        mp = "/home/techdufus"
+#        size = "222G"
+#      }
+#    ]
+#  }
 }

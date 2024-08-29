@@ -22,10 +22,12 @@ variable "stratus_nodes" {
   default     = {}
 }
 
+
 variable "rancher" {
   description = "Map of rancher server nodes"
   type        = map(any)
   default     = {}
+
 }
 
 variable "k8s_master" {
@@ -83,29 +85,29 @@ variable "fileserver" {
 }
 
 variable "gateway" {
-  description = "Gateway of the node."
+  description = "Gateway of the VM."
   type        = string
 }
 
 variable "nameserver" {
-  description = "Nameserver of the node."
+  description = "Nameserver of the VM."
   type        = string
 }
 
 variable "vlan_tag" {
-  description = "VLAN tag of the node."
+  description = "VLAN tag of the VM."
   type        = number
   default     = -1
 }
 
 variable "net_model" {
-  description = "Network model of the node."
+  description = "Network model of the VM."
   type        = string
   default     = "virtio"
 }
 
 variable "net_bridge" {
-  description = "Network bridge of the node."
+  description = "Network bridge of the VM."
   type        = string
   default     = "vmbr0"
 }
@@ -117,49 +119,49 @@ variable "target_node" {
 }
 
 variable "cpu_cores" {
-  description = "Number of CPU cores of the node."
+  description = "Number of CPU cores of the VM."
   type        = number
   default     = 2
 }
 
 variable "cpu_sockets" {
-  description = "Number of CPU sockets of the node."
+  description = "Number of CPU sockets of the VM."
   type        = number
   default     = 1
 }
 
 variable "memory" {
-  description = "Memory of the node."
+  description = "Memory of the VM."
   type        = number
   default     = 7200
 }
 
 variable "hdd_type" {
-  description = "Type of the HDD of the node."
+  description = "Type of the HDD of the VM."
   type        = string
   default     = "scsi"
 }
 
 variable "storage" {
-  description = "Storage of the node."
+  description = "Storage of the VM."
   type        = string
   default     = "local-lvm"
 }
 
 variable "scsihw" {
-  description = "SCSI hardware of the node."
+  description = "SCSI hardware of the VM."
   type        = string
   default     = "virtio-scsi-pci"
 }
 
 variable "bootdisk" {
-  description = "Boot disk of the node."
+  description = "Boot disk of the VM."
   type        = string
   default     = "scsi0"
 }
 
 variable "vm_template" {
-  description = "Template to clone for the node."
+  description = "Template to clone for the VM."
   type        = string
   default     = "ubuntu-server-20.04-template"
 }
@@ -193,6 +195,12 @@ variable "qemu_os" {
   description = "OS of the k8s node."
   type        = string
   default     = "ubuntu"
+}
+  
+variable "notes_title" {
+  description = "Title for the notes snippit in the VM Summary"
+  type = string
+  default = "VM"
 }
 
 variable "flux_cumulus_requirements" {
@@ -266,4 +274,3 @@ variable "flux_stratus_requirements" {
     rate        = 14
   }
 }
-

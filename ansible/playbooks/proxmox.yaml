@@ -7,4 +7,3 @@
   roles:
     - { role: proxmox, tags: proxmox }
     # - { role: glances, tags: glances }
-    # - { role: tailscale, tags: tailscale }
