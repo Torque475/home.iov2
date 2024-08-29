@@ -256,7 +256,28 @@ module "k8s_master" {
   macaddr         = try(each.value.macaddr, "0")
   vm_template     = each.value.vm_template
   target_node     = var.target_node
+  cpu_cores       = var.cpu_cores
   storage         = each.value.storage
+  username        = var.username
+  agent           = var.agent
+  ssh_public_keys = var.ssh_public_keys
+}
+
+# Rancher server to help manage k3s nodes
+module "rancher" {
+  source          = "./modules/proxmox_vm"
+  for_each        = var.rancher
+  hostname        = each.value.hostname
+  vmid            = each.value.vmid
+  nameserver      = var.nameserver
+  ip_address      = "${each.value.ip_address}"
+  gateway         = var.gateway
+  macaddr         = try(each.value.macaddr, "0")
+  vm_template     = each.value.vm_template
+  target_node     = var.target_node
+  cpu_cores       = each.value.cpu_cores
+  storage         = each.value.storage
+  memory          = each.value.memory
   username        = var.username
   agent           = var.agent
   ssh_public_keys = var.ssh_public_keys
@@ -284,10 +305,12 @@ module "k8s_node" {
 }
 
 #
-# Container Time! Use as an example
-module "lxc_flux_cumulus" {
+# Container Time!
+# FileShare Container
+module "fileserver" {
   source          = "./modules/proxmox_lxc"
-  for_each        = var.lxc_cumulus_nodes
+  for_each        = var.fileserver
+
   hostname        = each.value.hostname
   vmid            = each.value.vmid
   nameserver      = var.nameserver
@@ -298,10 +321,9 @@ module "lxc_flux_cumulus" {
   target_node     = var.target_node
   cpu_cores       = each.value.cpu_cores
   storage         = each.value.storage
-  memory          = var.flux_cumulus_requirements.memory
-  # rootfs_size     = "${var.flux_cumulus_requirements.hdd_size}G"
-  swap            = try(each.value.swap, 0)
-  ssh_public_keys = try(var.ssh_public_keys, "")
+  memory          = each.value.memory
+  swap            = each.value.swap
+  ssh_public_keys = var.ssh_public_keys
   unprivileged    = each.value.unprivileged
 
   # Mountpoint is dynamic for 0-many extra mounts

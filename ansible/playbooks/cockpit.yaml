@@ -7,4 +7,3 @@
   
   roles: 
     - { role: cockpit, tags: cockpit }
-    
